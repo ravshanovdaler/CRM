@@ -45,6 +45,7 @@ class StudentsModel(models.Model):
 class PaymentsModel(models.Model):
     student = models.ForeignKey(StudentsModel, on_delete=models.SET_NULL, null=True, related_name='payments')
     amount = models.BigIntegerField()
+    date = models.DateField(auto_now_add=True, null=True, blank=True)
 
     def __str__(self):
         return f"{self.student} has paid {self.amount} sums"
