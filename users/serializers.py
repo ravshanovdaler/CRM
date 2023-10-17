@@ -1,7 +1,8 @@
 from rest_framework import serializers
-from .models import UserModel, SalaryPaymentsModel
+from .models import UserModel, SalaryPaymentsModel, ComplaintsModel
 from rest_framework.validators import ValidationError
 from rest_framework.authtoken.models import Token
+from courses.serializers import GroupsSerializer
 
 
 class SalaryPayment(serializers.ModelSerializer):
@@ -13,6 +14,7 @@ class SalaryPayment(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
+    groups = GroupsSerializer(many=True, read_only=True)
     password = serializers.CharField(min_length=8, style={'input_type': 'password'}, write_only=True)
     password2 = serializers.CharField(min_length=8, style={'input_type': 'password'}, write_only=True)
     payment = SalaryPayment(read_only=True, many=True)
@@ -22,7 +24,7 @@ class UserSerializer(serializers.ModelSerializer):
         fields = (
             'username', 'first_name', 'last_name', 'email', 'age', 'phone_number', 'job_type', 'date_employeed',
             'salary',
-            'card_number', 'is_paid', 'password', 'password2', 'payment')
+            'card_number', 'is_paid', 'password', 'password2', 'payment','groups')
 
     def validate(self, attrs):
         user_exists = UserModel.objects.filter(username=attrs['username']).exists()
@@ -46,3 +48,9 @@ class UserSerializer(serializers.ModelSerializer):
         user.save()
         Token.objects.create(user=user)
         return user
+
+
+class ComplaintsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ComplaintsModel
+        fields = '__all__'

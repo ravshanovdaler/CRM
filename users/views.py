@@ -1,7 +1,7 @@
-from rest_framework.generics import CreateAPIView, DestroyAPIView, ListCreateAPIView
+from rest_framework.generics import CreateAPIView, DestroyAPIView, ListCreateAPIView, ListAPIView
 from .permissions import HasUserPermission
-from .models import UserModel, SalaryPaymentsModel
-from .serializers import UserSerializer, SalaryPayment
+from .models import UserModel, SalaryPaymentsModel, ComplaintsModel
+from .serializers import UserSerializer, SalaryPayment, ComplaintsSerializer
 from rest_framework.response import Response
 from rest_framework import status
 
@@ -30,4 +30,15 @@ class DeleteUser(DestroyAPIView):
 class Payments(ListCreateAPIView):
     queryset = SalaryPaymentsModel.objects.all()
     serializer_class = SalaryPayment
+    permission_classes = [HasUserPermission]
+
+
+class ComplainView(CreateAPIView):
+    queryset = ComplaintsModel.objects.all()
+    serializer_class = ComplaintsSerializer
+
+
+class ComplaintsListView(ListAPIView):
+    queryset = ComplaintsModel.objects.all()
+    serializer_class = ComplaintsSerializer
     permission_classes = [HasUserPermission]

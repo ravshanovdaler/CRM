@@ -27,7 +27,6 @@ class GroupsModel(models.Model):
 
     days = ArrayField(
         models.CharField(max_length=10, choices=WEEKDAYS_CHOICES),
-        default=[],
     )
     teacher = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     time = models.TimeField()

@@ -36,7 +36,7 @@ class UserModel(AbstractUser):
 class SalaryPaymentsModel(models.Model):
     employee = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='payment')
     amount = models.BigIntegerField(blank=True)
-    date = models.DateTimeField(auto_now_add=True,null=True, blank=True)
+    date = models.DateTimeField(auto_now_add=True, null=True, blank=True)
 
     def save(self, *args, **kwargs):
         self.amount = self.employee.salary
@@ -44,3 +44,10 @@ class SalaryPaymentsModel(models.Model):
 
     def __str__(self):
         return f"{self.amount} sums to {self.employee}"
+
+
+class ComplaintsModel(models.Model):
+    title = models.CharField(max_length=50)
+    text = models.TextField()
+    date = models.DateTimeField(auto_now_add=True)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='complaints')
