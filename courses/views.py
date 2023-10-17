@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-
+from users.permissions import HasUserPermission
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.views import APIView
 from .models import CoursesModel, StudentsModel, GroupsModel, PaymentsModel
@@ -11,39 +11,48 @@ from rest_framework import status
 class CoursesView(ListCreateAPIView):
     queryset = CoursesModel.objects.all()
     serializer_class = CoursesSerializer
+    permission_classes = [HasUserPermission]
 
 
 class CourseView(RetrieveUpdateDestroyAPIView):
     queryset = CoursesModel.objects.all()
     serializer_class = CoursesSerializer
+    permission_classes = [HasUserPermission]
 
 
 class GroupsView(ListCreateAPIView):
     queryset = GroupsModel.objects.all()
     serializer_class = GroupsSerializer
+    permission_classes = [HasUserPermission]
 
 
 class GroupView(RetrieveUpdateDestroyAPIView):
     queryset = GroupsModel.objects.all()
     serializer_class = GroupsSerializer
+    permission_classes = [HasUserPermission]
 
 
 class StudentsView(ListCreateAPIView):
     queryset = StudentsModel.objects.all()
     serializer_class = StudentsSerializer
+    permission_classes = [HasUserPermission]
 
 
 class StudentView(RetrieveUpdateDestroyAPIView):
     queryset = StudentsModel.objects.all()
     serializer_class = StudentsSerializer
+    permission_classes = [HasUserPermission]
 
 
 class PaymentsView(ListCreateAPIView):
     queryset = PaymentsModel.objects.all()
     serializer_class = PaymentsSerializer
+    permission_classes = [HasUserPermission]
 
 
 class DebtorsView(APIView):
+    permission_classes = [HasUserPermission]
+
     def get(self, request):
         debtors = []
         students = StudentsModel.objects.all()
