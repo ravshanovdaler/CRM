@@ -3,6 +3,8 @@ from .models import CoursesModel, GroupsModel, StudentsModel, PaymentsModel
 
 
 class PaymentsSerializer(serializers.ModelSerializer):
+    amount = serializers.CharField(read_only=True)
+
     class Meta:
         model = PaymentsModel
         fields = '__all__'

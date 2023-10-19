@@ -1,4 +1,6 @@
 from pathlib import Path
+import dj_database_url
+from decouple import config
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -22,12 +24,10 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
 
-
     'users',
     'courses',
     'finance'
 ]
-
 
 REST_FRAMEWORK = {
     "NON_FIELD_ERRORS_KEY": "errors",
@@ -39,7 +39,6 @@ REST_FRAMEWORK = {
         'users.permissions.HasUserPermission',
     ],
 }
-
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -72,14 +71,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'railway',
-        'USER': 'postgres',
-        'PASSWORD': 'gLl4r0xgtvSmuHaLpKzu',
-        'HOST': 'containers-us-west-116.railway.app',
-        'PORT': '7524',
-    }
+    "default": dj_database_url.parse(config('DATABASE_URL'))
 }
 
 AUTH_PASSWORD_VALIDATORS = [
